@@ -131,6 +131,7 @@ const mapStyles = createListCollection({
     { label: 'Toner En', value: 'https://tile.openstreetmap.jp/styles/maptiler-toner-en/style.json' },
     { label: 'OSM OpenMapTiles', value: 'https://tile.openstreetmap.jp/styles/openmaptiles/style.json' },
     { label: 'community mapmaker', value: 'https://armd-02.github.io/openhc-map/tiles/osmfj_nopoi.json' },
+    { label: 'Demo Tile', value: 'https://demotiles.maplibre.org/style.json' },
   ]
 })
 
