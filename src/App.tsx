@@ -40,27 +40,31 @@ function App() {
   </script>
   `
   return (
-    <>
-      <Heading size="3xl" letterSpacing={"tight"}>
-        Generate MapLibre Snippet
-      </Heading>
-      <Flex>
-        <div id="map" style={{ width: "100%", height: "100vh" }}>
-          <Heading size="lg" letterSpacing={"tight"}>
+    <Flex direction="column" minH="100vh">
+      <Box p={4}>
+        <Heading size="3xl" letterSpacing={"tight"}>
+          Generate MapLibre Snippet
+        </Heading>
+      </Box>
+      <Flex flex="1" direction="row">
+        <Box flex="1" minH="100%" position="relative">
+          <Heading size="lg" letterSpacing={"tight"} position={"relative"} zIndex={1}>
             Map
           </Heading>
-          <Map
-            {...viewState}
-            controller={true}
-            onMove={evt => setViewState(evt.viewState)}
-            style={{ width: "100%", height: "100vh" }}
-            hash={true}
-            mapStyle={mapStyle}
-          >
-            <Marker longitude={viewState.longitude} latitude={viewState.latitude} />
-          </Map>
-        </div>
-        <div id="editor" style={{ width: "100%", height: "100vh" }}>
+          <Box position="absolute" top="50px" left="0" width="100%" height="calc(100% - 50px)">
+            <Map
+              {...viewState}
+              controller={true}
+              onMove={evt => setViewState(evt.viewState)}
+              style={{ width: "100%", height: "100%" }}
+              hash={true}
+              mapStyle={mapStyle}
+            >
+              <Marker longitude={viewState.longitude} latitude={viewState.latitude} />
+            </Map>
+          </Box>
+        </Box>
+        <Box flex="1" height="100%">
           <Heading size="lg" letterSpacing={"tight"}>
             Editor
           </Heading>
@@ -92,8 +96,8 @@ function App() {
               ))}
             </SelectContent>
           </SelectRoot>
-        </div>
-        <div id="snippet" style={{ width: "100%", height: "100vh" }}>
+        </Box>
+        <Box flex="1" height="100%">
           <Heading size="lg" letterSpacing={"tight"}>
             Snippet
           </Heading>
@@ -114,9 +118,9 @@ function App() {
           >
             <Code>{code}</Code>
           </Box>
-        </div>
+        </Box>
       </Flex>
-    </>
+    </Flex>
   )
 }
 
