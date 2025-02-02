@@ -42,7 +42,7 @@ function App() {
   const iframeCode = `
   <iframe
     src="https://smellman.github.io/embed-maplibre/?style=${encodeURIComponent(mapStyle)}&lat=${viewState.latitude}&lng=${viewState.longitude}&zoom=${viewState.zoom}&pitch=${viewState.pitch}"
-    style="width: 100%; height: 100%; border: none;"
+    style="width: 100vw; height: 100vh; border: none;"
   ></iframe>
   `
   return (
