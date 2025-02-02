@@ -38,10 +38,12 @@ function App() {
         .addTo(map);
   </script>
   `
+  const [iframeWidth, setIframeWidth] = useState('100%')
+  const [iframeHeight, setIframeHeight] = useState('100%')
   const iframeCode = `
   <iframe
     src="https://smellman.github.io/embed-maplibre/?style=${encodeURIComponent(mapStyle)}&lat=${viewState.latitude}&lng=${viewState.longitude}&zoom=${viewState.zoom}&pitch=${viewState.pitch}"
-    style="width: 100vw; height: 100vh; border: none;"
+    style="width: ${iframeWidth}; height: ${iframeHeight}; border: none;"
   ></iframe>
   `
   return (
@@ -65,7 +67,14 @@ function App() {
             <Marker longitude={viewState.longitude} latitude={viewState.latitude} />
           </Map>
         </div>
-        <Editor mapStyle={mapStyle} onStyleChange={setMapStyle} />
+        <Editor
+          mapStyle={mapStyle}
+          onStyleChange={setMapStyle}
+          iframeWidth={iframeWidth}
+          setIframeWidth={setIframeWidth}
+          iframeHeight={iframeHeight}
+          setIframeHeight={setIframeHeight}
+        />
         <CodeSnippet code={code} iframeCode={iframeCode} />
       </Flex>
     </>

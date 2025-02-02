@@ -6,9 +6,20 @@ import { createListCollection, SelectItem, SelectTrigger } from '@ark-ui/react'
 interface EditorProps {
   mapStyle: string
   onStyleChange: (newStyle: string) => void
+  iframeWidth: string
+  setIframeWidth: (width: string) => void
+  iframeHeight: string
+  setIframeHeight: (height: string) => void
 }
 
-export const Editor: React.FC<EditorProps> = React.memo(({ mapStyle, onStyleChange }) => {
+export const Editor: React.FC<EditorProps> = React.memo(({ 
+  mapStyle,
+  onStyleChange,
+  iframeWidth,
+  setIframeWidth,
+  iframeHeight,
+  setIframeHeight,
+}) => {
   return (
     <div id="editor" style={{ width: "100%", height: "100vh" }}>
       <Heading size="lg" letterSpacing="tight">
@@ -44,6 +55,28 @@ export const Editor: React.FC<EditorProps> = React.memo(({ mapStyle, onStyleChan
           ))}
         </SelectContent>
       </SelectRoot>
+      <Heading size="md" letterSpacing="tight">
+        Set the width of the iframe
+      </Heading>
+      <Editable.Root
+        defaultValue={iframeWidth}
+        onValueCommit={(details) => setIframeWidth(details.value)}
+        p={4}
+      >
+        <Editable.Preview />
+        <Editable.Input />
+      </Editable.Root>
+      <Heading size="md" letterSpacing="tight">
+        Set the width of the iframe
+      </Heading>
+      <Editable.Root
+        defaultValue={iframeHeight}
+        onValueCommit={(details) => setIframeHeight(details.value)}
+        p={4}
+      >
+        <Editable.Preview />
+        <Editable.Input />
+      </Editable.Root>
     </div>
   )
 })
