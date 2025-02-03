@@ -2,7 +2,7 @@ import { Flex, Heading } from '@chakra-ui/react'
 import './App.css'
 import { Map, Marker } from '@vis.gl/react-maplibre'
 import 'maplibre-gl/dist/maplibre-gl.css'
-import { useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Editor } from './Editor'
 import { CodeSnippet } from './CodeSnippet'
 
@@ -40,9 +40,21 @@ function App() {
   `
   const [iframeWidth, setIframeWidth] = useState('100%')
   const [iframeHeight, setIframeHeight] = useState('100%')
+  const [geoUri, setGeoUri] = useState(`geo:${viewState.latitude},${viewState.longitude}?z=${viewState.zoom}`)
+  const setGeoUriAndViewState = useCallback((geoUri: string) => {
+    setGeoUri(geoUri)
+    const [latitude, longitude] = geoUri.match(/geo:(.*),(.*)/)!.slice(1).map(parseFloat) as [number, number]
+    const zoom = parseInt(geoUri.match(/z=(.*)/)![1])
+    setViewState({ latitude, longitude, zoom, pitch: viewState.pitch })
+  }, [viewState.pitch])
+  // useEffect(() => {
+  //   const [latitude, longitude] = geoUri.match(/geo:(.*),(.*)/)!.slice(1).map(parseFloat) as [number, number]
+  //   const zoom = parseInt(geoUri.match(/z=(.*)/)![1])
+  //   setViewState({ latitude, longitude, zoom, pitch: viewState.pitch })
+  // }, [geoUri, viewState.pitch])
   const iframeCode = `
   <iframe
-    src="https://smellman.github.io/embed-maplibre/?style=${encodeURIComponent(mapStyle)}&lat=${viewState.latitude}&lng=${viewState.longitude}&zoom=${viewState.zoom}&pitch=${viewState.pitch}"
+    src="https://smellman.github.io/embed-maplibre/?style=${encodeURIComponent(mapStyle)}&geoUri=${encodeURIComponent(geoUri)}&pitch=${viewState.pitch}"
     style="width: ${iframeWidth}; height: ${iframeHeight}; border: none;"
   ></iframe>
   `
@@ -59,7 +71,10 @@ function App() {
           <Map
             {...viewState}
             controller={true}
-            onMove={evt => setViewState(evt.viewState)}
+            onMove={evt => {
+              setViewState(evt.viewState)
+              setGeoUri(`geo:${evt.viewState.latitude},${evt.viewState.longitude}?z=${evt.viewState.zoom}`)
+            }}
             style={{ width: "100%", height: "100vh" }}
             hash={true}
             mapStyle={mapStyle}
@@ -74,6 +89,7 @@ function App() {
           setIframeWidth={setIframeWidth}
           iframeHeight={iframeHeight}
           setIframeHeight={setIframeHeight}
+          setGeoUri={setGeoUriAndViewState}
         />
         <CodeSnippet code={code} iframeCode={iframeCode} />
       </Flex>

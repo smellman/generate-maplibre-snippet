@@ -10,6 +10,7 @@ interface EditorProps {
   setIframeWidth: (width: string) => void
   iframeHeight: string
   setIframeHeight: (height: string) => void
+  setGeoUri: (geoUri: string) => void
 }
 
 export const Editor: React.FC<EditorProps> = React.memo(({ 
@@ -19,6 +20,7 @@ export const Editor: React.FC<EditorProps> = React.memo(({
   setIframeWidth,
   iframeHeight,
   setIframeHeight,
+  setGeoUri,
 }) => {
   return (
     <div id="editor" style={{ width: "100%", height: "100vh" }}>
@@ -75,7 +77,24 @@ export const Editor: React.FC<EditorProps> = React.memo(({
         p={4}
       >
         <Editable.Preview />
-        <Editable.Input />
+        <Editable.Input
+          placeholder='100%'
+          colorPalette={"yellow"}
+        />
+      </Editable.Root>
+      <Heading size="md" letterSpacing="tight">
+        Set geoUri for the iframe
+      </Heading>
+      <Editable.Root
+        defaultValue={"geo:35.681236,139.767125?z=10"}
+        onValueCommit={(details) => setGeoUri(details.value)}
+        p={4}
+      >
+        <Editable.Preview />
+        <Editable.Input
+          placeholder="geo:35.681236,139.767125?z=10"
+          colorPalette={"yellow"}
+        />
       </Editable.Root>
     </div>
   )
