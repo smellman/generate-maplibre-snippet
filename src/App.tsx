@@ -36,6 +36,9 @@ function App() {
       const marker = new maplibregl.Marker()
         .setLngLat(latlng)
         .addTo(map);
+      const popup = new maplibregl.Popup()
+        .setHTML('<a href="https://www.openstreetmap.org/?mlat=${viewState.latitude}&mlon=${viewState.longitude}&zoom=${Math.floor(viewState.zoom)}" target="_blank">Open OpenStreetMap</a>')
+      marker.setPopup(popup)
   </script>
   `
   const [iframeWidth, setIframeWidth] = useState('100%')
@@ -47,16 +50,14 @@ function App() {
     const zoom = parseInt(geoUri.match(/z=(.*)/)![1])
     setViewState({ latitude, longitude, zoom, pitch: viewState.pitch })
   }, [viewState.pitch])
-  // useEffect(() => {
-  //   const [latitude, longitude] = geoUri.match(/geo:(.*),(.*)/)!.slice(1).map(parseFloat) as [number, number]
-  //   const zoom = parseInt(geoUri.match(/z=(.*)/)![1])
-  //   setViewState({ latitude, longitude, zoom, pitch: viewState.pitch })
-  // }, [geoUri, viewState.pitch])
   const iframeCode = `
   <iframe
     src="https://smellman.github.io/embed-maplibre/?style=${encodeURIComponent(mapStyle)}&geoUri=${encodeURIComponent(geoUri)}&pitch=${viewState.pitch}"
     style="width: ${iframeWidth}; height: ${iframeHeight}; border: none;"
   ></iframe>
+  `
+  const openGoogleMaps = `
+  <a href="https://www.google.com/maps?q=${viewState.latitude},${viewState.longitude}&z=${Math.floor(viewState.zoom)}" target="_blank">Open Google Maps</a>
   `
   return (
     <>
@@ -91,7 +92,11 @@ function App() {
           setIframeHeight={setIframeHeight}
           setGeoUri={setGeoUriAndViewState}
         />
-        <CodeSnippet code={code} iframeCode={iframeCode} />
+        <CodeSnippet
+          code={code}
+          iframeCode={iframeCode}
+          openGoogleMaps={openGoogleMaps}
+        />
       </Flex>
     </>
   )
