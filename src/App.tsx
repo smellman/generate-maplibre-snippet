@@ -2,7 +2,7 @@ import { Flex, Heading } from '@chakra-ui/react'
 import './App.css'
 import { Map, Marker } from '@vis.gl/react-maplibre'
 import 'maplibre-gl/dist/maplibre-gl.css'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { Editor } from './Editor'
 import { CodeSnippet } from './CodeSnippet'
 
