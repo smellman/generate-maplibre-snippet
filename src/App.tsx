@@ -19,8 +19,8 @@ function App() {
     body { margin: 0; padding: 0; }
     #map { position: absolute; top: 0; bottom: 0; width: 100%; }
   </style>
-  <script src="https://unpkg.com/maplibre-gl@^5.1.0/dist/maplibre-gl.js"></script>
-  <link href="https://unpkg.com/maplibre-gl@^5.1.0/dist/maplibre-gl.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/maplibre-gl@^5.2.0/dist/maplibre-gl.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/maplibre-gl@^5.2.0/dist/maplibre-gl.css" rel="stylesheet" />
   <div id="map"></div>
     <script>
       const latlng = [${viewState.longitude}, ${viewState.latitude}];
